@@ -1,0 +1,121 @@
+---
+/**
+ * La feuille de parchemin des affiches : en-tête « N° · Oratorium · ANNO »,
+ * double filet à damier, papier taché. Tout le contenu de la page s'y pose.
+ */
+interface Props {
+  /** Set to `false` to omit the component. */
+  render?: boolean;
+  /** Folio number shown in the top left corner. */
+  number?: string;
+  /** Word shown in the middle of the header. */
+  house?: string;
+}
+
+const { render = true, number = "9007", house = "Oratorium" } = Astro.props;
+---
+
+{render && Astro.slots.has("default") && (
+  <div class="folio_wrap">
+    <header class="folio_head">
+      <span class="folio_no"><i>N</i><sup>o</sup>{number}</span>
+      <span class="folio_house">{house}</span>
+      <span class="folio_anno">ANNO<br />MMXXVI</span>
+    </header>
+    <div class="folio_sheet">
+      <span class="folio_band" aria-hidden="true" />
+      <div class="folio_body">
+        <slot />
+      </div>
+    </div>
+  </div>
+)}
+
+<style is:global>
+  @layer components {
+    .folio_wrap {
+      --_paper: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .27 0 0 0 0 .14 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.38'/%3E%3C/svg%3E");
+      --_stain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='900'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.006' numOctaves='4' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .42 0 0 0 0 .22 0 0 0 1.6 -.7'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23s)' opacity='.35'/%3E%3C/svg%3E");
+      position: relative;
+      width: min(100% - 1rem, 46rem);
+      margin: 0.5rem auto 2rem;
+      padding: 0.6rem 0.75rem 0.9rem;
+      background:
+        var(--_paper),
+        var(--_stain),
+        radial-gradient(120% 90% at 50% 40%, transparent 55%, color-mix(in srgb, var(--parchment-400) 70%, transparent)),
+        var(--parchment-200);
+      background-size: 320px, 900px, 100% 100%, auto;
+      box-shadow:
+        0 0.1rem 0 color-mix(in srgb, var(--frame-700) 25%, transparent),
+        0 1.5rem 3rem -1.5rem color-mix(in srgb, var(--ink-900) 45%, transparent);
+      @media (width >= 48rem) {
+        margin-top: 2rem;
+        padding: 1rem 1.5rem 1.5rem;
+      }
+    }
+    .folio_head {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: end;
+      padding: 0 0.35rem 0.5rem;
+      font-family: var(--display-family);
+      font-size: 1rem;
+      line-height: 1;
+      color: var(--ink-700);
+    }
+    .folio_no {
+      color: var(--burgundy-600);
+      font-size: 1.15rem;
+      font-style: italic;
+      sup {
+        font-size: 0.6em;
+        text-decoration: underline;
+      }
+    }
+    .folio_house {
+      font-size: 1.15rem;
+      font-weight: 600;
+    }
+    .folio_anno {
+      justify-self: end;
+      text-align: center;
+      font-size: 0.62rem;
+      letter-spacing: 0.04em;
+      line-height: 0.95;
+    }
+    .folio_sheet {
+      position: relative;
+      padding: 1.35rem;
+      outline: var(--border-width) solid var(--frame-700);
+      @media (width >= 48rem) {
+        padding: 2rem;
+      }
+    }
+    .folio_band {
+      position: absolute;
+      inset: 0.3rem;
+      padding: 0.42rem;
+      border: var(--border-width) solid var(--frame-700);
+      background: repeating-conic-gradient(var(--frame-700) 0 25%, transparent 0 50%) 0 0 / 0.28rem 0.28rem;
+      mask:
+        linear-gradient(#000 0 0) content-box exclude,
+        linear-gradient(#000 0 0);
+      opacity: 0.85;
+      pointer-events: none;
+      &::after {
+        content: "";
+        position: absolute;
+        inset: 0.42rem;
+        border: var(--border-width) solid var(--frame-700);
+      }
+    }
+    .folio_body {
+      position: relative;
+      padding: 1.25rem 0.5rem;
+      @media (width >= 48rem) {
+        padding: 2rem 1.5rem;
+      }
+    }
+  }
+</style>

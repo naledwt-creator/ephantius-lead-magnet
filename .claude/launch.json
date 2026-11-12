@@ -1,0 +1,6 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    { "name": "voile-du-jour", "runtimeExecutable": "npx", "runtimeArgs": ["astro", "dev", "--port", "4329"], "port": 4329 }
+  ]
+}

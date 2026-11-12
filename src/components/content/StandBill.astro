@@ -1,0 +1,176 @@
+---
+/**
+ * L'affiche du salon dans la page : invitation à montrer sa lame au stand,
+ * horaires et conférence.
+ */
+import { SALON } from "@/data/salon.ts";
+import Glyph from "@/components/global/Glyph.astro";
+
+interface Props {
+  /** Set to `false` to omit the component. */
+  render?: boolean;
+}
+
+const { render = true } = Astro.props;
+
+const t = SALON.talk;
+---
+
+{render && (
+  <section class="stand_wrap" id="stand" aria-labelledby="stand-title">
+    <div class="stand_show">
+      <Glyph name="star" class="stand_star" />
+      <p class="stand_show_text">Montrez cette lame au <strong>stand {SALON.stand}</strong>.<br />Éphantius vous dira ce qu'il y voit.</p>
+    </div>
+
+    <div class="stand_bill">
+      <div class="stand_place">
+        <p class="stand_salon" id="stand-title">{SALON.name}</p>
+        <p class="stand_kind">{SALON.kind}</p>
+        <p class="stand_where">{SALON.place}<br /><span>Stand {SALON.stand}</span></p>
+      </div>
+      <ul class="stand_days" aria-label="Horaires">
+        {SALON.days.map((d) => (
+          <li><span>{d.day} {d.date}</span><span class="stand_hours">{d.hours}</span></li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="stand_talk">
+      <p class="stand_talk_label">Conférence</p>
+      <p class="stand_talk_when">{t.when}<br />{t.room}</p>
+      <p class="stand_talk_title">{t.title}</p>
+    </div>
+  </section>
+)}
+
+<style is:global>
+  @layer components {
+    .stand_wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2.5rem;
+      text-align: center;
+      scroll-margin-top: 1rem;
+    }
+    .stand_show {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      width: 100%;
+      padding: 1.5rem 1rem;
+      border-block: var(--border-width) solid var(--frame-700);
+      outline: var(--border-width) solid var(--border);
+      outline-offset: -0.35rem;
+    }
+    .stand_star {
+      font-size: 1.6rem;
+      color: var(--burgundy-600);
+    }
+    .stand_show_text {
+      font-family: var(--display-family);
+      font-style: italic;
+      font-size: clamp(1.45rem, 5.8vw, 1.9rem);
+      line-height: 1.2;
+      color: var(--ink-700);
+      strong {
+        font-style: normal;
+        font-weight: 600;
+        color: var(--burgundy-600);
+      }
+    }
+    .stand_bill {
+      display: grid;
+      gap: 1.5rem;
+      width: 100%;
+      @media (width >= 34rem) {
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        text-align: left;
+      }
+    }
+    .stand_place {
+      font-family: var(--display-family);
+      color: var(--ink-700);
+    }
+    .stand_salon {
+      font-family: var(--primary-family);
+      font-weight: 500;
+      font-size: 2.6rem;
+      line-height: 1;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--indigo-600);
+    }
+    .stand_kind {
+      display: inline-block;
+      margin-top: 0.5rem;
+      padding: 0.2rem 0.75rem;
+      font-family: var(--primary-family);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: var(--indigo-600);
+      color: var(--parchment-100);
+    }
+    .stand_where {
+      margin-top: 0.9rem;
+      font-size: 1.5rem;
+      line-height: 1.05;
+      span {
+        font-size: 1.15rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+    }
+    .stand_days {
+      display: grid;
+      gap: 0.3rem;
+      font-family: var(--primary-family);
+      font-size: 1.35rem;
+      line-height: 1.1;
+      li {
+        display: flex;
+        justify-content: center;
+        gap: 0.8rem;
+        @media (width >= 34rem) {
+          justify-content: space-between;
+        }
+      }
+    }
+    .stand_hours {
+      color: var(--burgundy-600);
+    }
+    .stand_talk {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.9rem;
+      width: 100%;
+      padding-top: 2rem;
+      border-top: var(--border-width) solid var(--border);
+    }
+    .stand_talk_label {
+      font-family: var(--display-family);
+      font-style: italic;
+      font-weight: 600;
+      font-size: clamp(2.6rem, 11vw, 3.4rem);
+      line-height: 1;
+      color: var(--burgundy-600);
+    }
+    .stand_talk_when {
+      font-size: 1.35rem;
+      line-height: 1.1;
+    }
+    .stand_talk_title {
+      max-width: 19ch;
+      font-family: var(--display-family);
+      font-size: clamp(1.55rem, 6.2vw, 2rem);
+      line-height: 1.12;
+      color: var(--ink-500);
+    }
+  }
+</style>

@@ -1,0 +1,25 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Folio from "@/components/global/Folio.astro";
+import VeilDraw from "@/components/content/VeilDraw.astro";
+import StandBill from "@/components/content/StandBill.astro";
+import OfferVeils from "@/components/content/OfferVeils.astro";
+import Colophon from "@/components/content/Colophon.astro";
+import Glyph from "@/components/global/Glyph.astro";
+---
+
+<BaseLayout title="Levez votre premier voile">
+  <Folio>
+    {/* Tirage et lecture */}
+    <VeilDraw />
+    <p class="rule-ornament margin-top-8 margin-bottom-8"><Glyph name="star" /></p>
+    {/* Le stand et la conférence */}
+    <StandBill />
+    <p class="rule-ornament margin-top-8 margin-bottom-8"><Glyph name="star" /></p>
+    {/* Les lectures */}
+    <OfferVeils />
+    <p class="rule-ornament margin-top-8 margin-bottom-7"><Glyph name="star" /></p>
+    {/* Pied de feuille */}
+    <Colophon />
+  </Folio>
+</BaseLayout>

@@ -1,0 +1,50 @@
+---
+/**
+ * Pied de feuille : sceau et crédits.
+ */
+import Glyph from "@/components/global/Glyph.astro";
+
+interface Props {
+  /** Set to `false` to omit the component. */
+  render?: boolean;
+}
+
+const { render = true } = Astro.props;
+---
+
+{render && (
+  <footer class="colophon_wrap">
+    <Glyph name="sigil" class="colophon_sigil" />
+    <p class="colophon_sign"><span>Éphantius Lémurien</span><span>Laboratorium</span></p>
+    <p class="colophon_credit">Lames du Tarot de Jean Dodal, Lyon, vers 1701 (domaine public). Votre date reste sur votre téléphone : rien n'est envoyé.</p>
+  </footer>
+)}
+
+<style is:global>
+  @layer components {
+    .colophon_wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      text-align: center;
+    }
+    .colophon_sigil {
+      margin-top: 1rem;
+      font-size: 3.2rem;
+      color: var(--burgundy-600);
+    }
+    .colophon_sign {
+      display: flex;
+      gap: 2rem;
+      font-family: var(--display-family);
+      font-size: 1.1rem;
+    }
+    .colophon_credit {
+      max-width: 40ch;
+      font-size: 0.85rem;
+      line-height: 1.35;
+      color: var(--text-2);
+    }
+  }
+</style>

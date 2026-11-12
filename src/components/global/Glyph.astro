@@ -1,0 +1,58 @@
+---
+/**
+ * Symboles alchimiques gravés des affiches : Mercure (regarder), Lune
+ * (ressentir), Soleil (relier), et le monogramme d'Éphantius.
+ */
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"svg"> {
+  /** Set to `false` to omit the component. */
+  render?: boolean;
+  /** Symbol to draw. */
+  name: "mercury" | "moon" | "sun" | "sigil" | "star";
+}
+
+const { render = true, name, class: className, ...rest } = Astro.props;
+---
+
+{render && (
+  <svg class:list={["glyph_wrap", name, className]} viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" {...rest}>
+    {name === "mercury" && (
+      <>
+        <path d="M15 5c1.5 4.5 5 7 9 7s7.5-2.5 9-7" />
+        <circle cx="24" cy="21" r="8" />
+        <circle cx="24" cy="21" r="1.6" fill="currentColor" stroke="none" />
+        <path d="M24 29v15M17 37h14" />
+      </>
+    )}
+    {name === "moon" && <path d="M28 5a19 19 0 1 0 0 38A15.5 15.5 0 0 1 28 5Z" />}
+    {name === "sun" && (
+      <>
+        <circle cx="24" cy="24" r="17" />
+        <circle cx="24" cy="24" r="3" fill="currentColor" stroke="none" />
+      </>
+    )}
+    {name === "star" && <path d="M24 4l3.2 15.4L42 24l-14.8 4.6L24 44l-3.2-15.4L6 24l14.8-4.6Z" fill="currentColor" stroke="none" />}
+    {name === "sigil" && (
+      <>
+        <path d="M24 4v40M14 14h20M16 36h16" />
+        <circle cx="24" cy="25" r="6.5" />
+        <circle cx="24" cy="25" r="1.4" fill="currentColor" stroke="none" />
+        <path d="M11 18a8 8 0 0 0 0 14 6.4 6.4 0 0 1 0-14Z" fill="currentColor" stroke="none" />
+        <path d="M37 18v14M33 25h8" />
+        <circle cx="24" cy="5" r="1.8" fill="currentColor" stroke="none" />
+      </>
+    )}
+  </svg>
+)}
+
+<style is:global>
+  @layer components {
+    .glyph_wrap {
+      width: 1em;
+      height: 1em;
+      flex-shrink: 0;
+      overflow: visible;
+    }
+  }
+</style>

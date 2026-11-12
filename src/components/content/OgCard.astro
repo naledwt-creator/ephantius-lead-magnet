@@ -1,0 +1,101 @@
+---
+/**
+ * Visuel de partage 1200 × 630 (capturé en `public/og-image.jpg`) : titre et
+ * trois lames, comme les affiches du stand.
+ */
+import { getImage } from "astro:assets";
+import { cardImg } from "@/data/arcanes.ts";
+
+interface Props {
+  /** Set to `false` to omit the component. */
+  render?: boolean;
+}
+
+const { render = true } = Astro.props;
+const cards = await Promise.all([13, 17, 0].map(async (n) => (await getImage({ src: cardImg(n), width: 360, format: "webp" })).src));
+---
+
+{render && (
+  <div class="og_wrap">
+    <div class="og_frame">
+      <div class="og_copy">
+        <p class="og_no"><i>N</i><sup>o</sup>9007 · Oratorium</p>
+        <p class="og_title">Vos Trois<br /><span>Voiles</span></p>
+        <p class="og_lede">Ni voyance, ni prédiction.<br />Levez votre premier voile.</p>
+        <p class="og_by">par Éphantius Lémurien</p>
+      </div>
+      <div class="og_cards">
+        {cards.map((src, i) => <img src={src} alt="" style={`--i:${i - 1}`} />)}
+      </div>
+    </div>
+  </div>
+)}
+
+<style is:global>
+  @layer components {
+    .og_wrap {
+      width: 1200px;
+      height: 630px;
+      padding: 28px;
+      background: radial-gradient(120% 90% at 50% 40%, transparent 55%, color-mix(in srgb, var(--parchment-400) 70%, transparent)), var(--parchment-200);
+    }
+    .og_frame {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      padding: 0 56px;
+      border: 2px solid var(--frame-700);
+      outline: 10px double var(--frame-700);
+      outline-offset: -20px;
+    }
+    .og_copy {
+      flex: 1;
+      font-family: var(--display-family);
+      color: var(--ink-700);
+    }
+    .og_no {
+      font-size: 26px;
+      font-style: italic;
+      color: var(--burgundy-600);
+    }
+    .og_title {
+      margin-top: 22px;
+      font-size: 112px;
+      font-weight: 500;
+      line-height: 0.86;
+      text-transform: uppercase;
+      span {
+        font-size: 0.72em;
+        color: var(--burgundy-600);
+      }
+    }
+    .og_lede {
+      margin-top: 30px;
+      font-size: 38px;
+      font-style: italic;
+      line-height: 1.15;
+    }
+    .og_by {
+      margin-top: 22px;
+      font-size: 26px;
+      color: var(--burgundy-600);
+    }
+    .og_cards {
+      position: relative;
+      width: 440px;
+      height: 520px;
+      img {
+        position: absolute;
+        left: 130px;
+        top: 50px;
+        width: 190px;
+        height: auto;
+        padding: 6px;
+        background: #d6d0c1;
+        outline: 1px solid var(--frame-700);
+        transform: translateX(calc(var(--i) * 120px)) rotate(calc(var(--i) * 9deg));
+        box-shadow: 0 10px 24px rgb(46 43 31 / 0.35);
+      }
+    }
+  }
+</style>
