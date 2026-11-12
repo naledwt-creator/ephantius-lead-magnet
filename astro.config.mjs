@@ -3,7 +3,9 @@ import { defineConfig, fontProviders } from "astro/config";
 import { SITE_URL } from "./src/consts.ts";
 
 export default defineConfig({
-  site: SITE_URL,
+  // L'URL peut porter un sous-chemin (GitHub Pages) : il devient la base du site.
+  site: new URL(SITE_URL).origin,
+  base: new URL(SITE_URL).pathname,
   fonts: [
     {
       name: "Cormorant Garamond",

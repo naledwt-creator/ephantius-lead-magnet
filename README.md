@@ -33,6 +33,6 @@ PUBLIC_SITE_URL=https://url-du-site npm run build       # site dans dist/, affic
 PUBLIC_SITE_URL=https://url-du-site node scripts/qr.mjs # QR seul en SVG et PNG dans qr/
 ```
 
-Sur Netlify, Vercel ou Cloudflare Pages : commande `npm run build`, dossier `dist`, variable d'environnement `PUBLIC_SITE_URL`.
+Version de test : GitHub Pages, publiée automatiquement à chaque push sur `main` par `.github/workflows/deploy.yml`, sur https://naledwt-creator.github.io/ephantius-lead-magnet/ (QR seul : `qr/qr-voile-du-jour.png` sur le site). Pour le sous-domaine final, changer `PUBLIC_SITE_URL` dans ce fichier (l'URL peut porter un sous-chemin, il devient la base du site).
 
 Lames : Tarot de Jean Dodal, Lyon, vers 1701 (domaine public).
